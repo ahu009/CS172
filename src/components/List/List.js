@@ -13,11 +13,20 @@ class List extends React.Component {
    * @param  {Object} props  Props passed to this class
    * @return {void}
    */
-  // constructor (props) {
-  //   super(props);
-  //   this.state = { clicked: true };
-  //   this.toggle = this.toggle.bind(this);
-  // }
+  constructor (props) {
+    super(props);
+    this.state = { request: null };
+  }
+
+  componentDidMount () {
+    let that = this;
+    fetch('http://localhost:5000/hello', {mode: 'cors'})
+      .then(function(response) {
+        response.text().then(function (text) {
+          that.setState({request: text});
+        });
+      })
+  }
 
 
   /**
@@ -29,24 +38,7 @@ class List extends React.Component {
     return (
       <div className={style.container}>
         <ListGroup>
-          <ListGroupItem>Item 1</ListGroupItem>
-          <ListGroupItem>Item 2</ListGroupItem>
-          <ListGroupItem>...</ListGroupItem>
-          <ListGroupItem>Item 1</ListGroupItem>
-          <ListGroupItem>Item 2</ListGroupItem>
-          <ListGroupItem>...</ListGroupItem>
-          <ListGroupItem>Item 1</ListGroupItem>
-          <ListGroupItem>Item 2</ListGroupItem>
-          <ListGroupItem>...</ListGroupItem>
-          <ListGroupItem>Item 1</ListGroupItem>
-          <ListGroupItem>Item 2</ListGroupItem>
-          <ListGroupItem>...</ListGroupItem>
-          <ListGroupItem>Item 1</ListGroupItem>
-          <ListGroupItem>Item 2</ListGroupItem>
-          <ListGroupItem>...</ListGroupItem>
-          <ListGroupItem>Item 1</ListGroupItem>
-          <ListGroupItem>Item 2</ListGroupItem>
-          <ListGroupItem>...</ListGroupItem>
+          <ListGroupItem>{this.state.request}</ListGroupItem>
         </ListGroup>
       </div>
     );
