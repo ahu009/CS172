@@ -7,7 +7,7 @@ CORS(app)
 
 incomes = [
   { 'description': 'salary', 'amount': 5000 },
-  { 'description': 'salary', 'amount': 6000 },
+  { 'description': 'salary', 'amosunt': 6000 },
   { 'description': 'poopoo', 'amount': 7000 }
 ]
 
