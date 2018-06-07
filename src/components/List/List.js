@@ -18,16 +18,26 @@ class List extends React.Component {
     this.state = { request: null };
   }
 
-  componentDidMount () {
+  // componentDidMount () {
+  //   let that = this;
+  //   fetch('http://localhost:5000/hello', {mode: 'cors'})
+  //     .then(function(response) {
+  //       response.text().then(function (text) {
+  //         that.setState({request: text});
+  //       });
+  //     })
+  // }
+
+  componentWillMount () {
     let that = this;
-    fetch('http://localhost:5000/hello', {mode: 'cors'})
+    fetch('http://localhost:5000/hello')
       .then(function(response) {
-        response.text().then(function (text) {
-          that.setState({request: text});
-        });
+        return response.json();
+      })
+      .then(function(myresponse) {
+        that.setState({request: myresponse})
       })
   }
-
 
   /**
    * Render function for UIComponent Component
@@ -38,7 +48,7 @@ class List extends React.Component {
     return (
       <div className={style.container}>
         <ListGroup>
-          <ListGroupItem>{this.state.request}</ListGroupItem>
+          {this.state.request ? this.state.request.map(element => <ListGroupItem>{element.description} {element.amount}</ListGroupItem>) : null}
         </ListGroup>
       </div>
     );
