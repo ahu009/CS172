@@ -13,7 +13,10 @@ incomes = [
 
 @app.route('/hello', methods = ['GET', 'POST'])
 def hello():
-  return jsonify(incomes)
+  all_args = request.args.lists()
+  print(all_args[0][0])
+  print(all_args[0][1][0])
+  return jsonify(all_args)
 
 if __name__ == '__main__':
     app.run(debug = True)
