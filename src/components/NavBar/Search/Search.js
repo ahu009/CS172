@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, FormGroup, FormControl } from 'react-bootstrap';
 
 import style from './Search.scss';
-import { setQuery } from './../../../actions';
+import { setQuery, setResponse } from './../../../actions';
 import { connect } from 'react-redux';
 
 
@@ -39,6 +39,16 @@ class Search extends React.Component {
   search() {
     //placeholder
     let value = this.state.value;
+
+    let that = this;
+    fetch(`http://localhost:5000/hello?query=${value}`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myresponse) {
+        that.props.setResponse(myresponse);
+      })
+
     if (value != '') {
       this.props.setQuery(value);
     }
@@ -70,7 +80,8 @@ class Search extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setQuery: query => dispatch(setQuery(query))
+  setQuery: query => dispatch(setQuery(query)),
+  setResponse: response => dispatch(setResponse(response)),
 }) 
  
 export default connect(null, mapDispatchToProps)(Search)

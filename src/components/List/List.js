@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './List.scss';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { connect } from 'react-redux'
 
 
 /**
@@ -15,7 +16,10 @@ class List extends React.Component {
    */
   constructor (props) {
     super(props);
-    this.state = { request: null };
+    this.state = {
+      request: null,
+      query: null,
+    };
   }
 
   // componentDidMount () {
@@ -28,15 +32,20 @@ class List extends React.Component {
   //     })
   // }
 
-  componentWillMount () {
-    let that = this;
-    fetch('http://localhost:5000/hello')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(myresponse) {
-        that.setState({request: myresponse})
-      })
+  // componentWillMount () {
+  //   let that = this;
+  //   fetch('http://localhost:5000/hello?test=fuckmisdf')
+  //     .then(function(response) {
+  //       return response.json();
+  //     })
+  //     .then(function(myresponse) {
+  //       console.log(myresponse);
+  //       that.setState({request: myresponse})
+  //     })
+  // }
+
+  componentDidUpdate () {
+    console.log(this.props.response);
   }
 
   /**
@@ -55,4 +64,9 @@ class List extends React.Component {
   }
 }
 
-export default List;
+const mapStateToProps = state => ({
+  query: state.query || {},
+  response: state.response || {},
+})
+ 
+export default connect(mapStateToProps, null)(List)

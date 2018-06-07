@@ -6,3 +6,12 @@ export function setQuery (query) {
     }));
   });
 }
+
+export function setResponse (response) {
+  return dispatch => new Promise((resolve) => {
+    return resolve(dispatch({
+      type: 'SET_RESPONSE',
+      response: response
+    }));
+  });
+}
